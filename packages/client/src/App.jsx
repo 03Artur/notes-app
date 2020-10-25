@@ -3,21 +3,19 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
 import './App.css';
 import { REFRESH_TOKEN_KEY } from './constants';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { refreshAuth } from './actions/authActionCreators';
-
 const HomePage = lazy(() => import('./pages/HomePage'));
 const AuthPage = lazy(() => import('./pages/AuthPage'));
 
 function App() {
-  const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+
   useEffect(() => {
-    const refreshToken = localStorage.getItem(REFRESH_TOKEN_KEY);
-    if (!user && refreshToken) {
+    if (localStorage.getItem(REFRESH_TOKEN_KEY)) {
       dispatch(
         refreshAuth({
-          refreshToken,
+          refreshToken: localStorage.getItem(REFRESH_TOKEN_KEY),
         }),
       );
     }

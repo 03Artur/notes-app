@@ -5,7 +5,11 @@ import { Row, Col, Divider, Typography } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import RegistrationForm from '../components/RegistrationForm';
 import { Switch, Route, NavLink, useHistory } from 'react-router-dom';
-import { loginRequest, signUpRequest } from '../actions/authActionCreators';
+import {
+  loginRequest,
+  signUpRequest,
+  refreshAuth,
+} from '../actions/authActionCreators';
 
 const { Title, Paragraph } = Typography;
 
@@ -19,6 +23,7 @@ function AuthPage() {
         {
           loginRequest,
           signUpRequest,
+          refreshAuth,
         },
         dispatch,
       ),
@@ -27,6 +32,7 @@ function AuthPage() {
 
   if (user) {
     history.replace('/');
+    return null;
   }
 
   return (

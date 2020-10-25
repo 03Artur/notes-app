@@ -1,16 +1,19 @@
-const { Model } = require("sequelize");
-const bcrypt = require("bcrypt");
-const { saltRounds } = require("../config");
+const { Model } = require('sequelize');
+const bcrypt = require('bcrypt');
+const { saltRounds } = require('../config');
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     comparePassword(value) {
-      return bcrypt.compare(value, this.getDataValue("password"));
+      return bcrypt.compare(value, this.getDataValue('password'));
     }
 
-    static associate({ RefreshToken }) {
+    static associate({ RefreshToken, Note }) {
       this.hasOne(RefreshToken, {
-        foreignKey: "userId",
+        foreignKey: 'userId',
+      });
+      this.hasMany(Note, {
+        foreignKey: 'userId',
       });
     }
   }
@@ -43,20 +46,20 @@ module.exports = (sequelize, DataTypes) => {
       },
       password: {
         allowNull: false,
-        field: "passwordHash",
+        field: 'passwordHash',
         type: DataTypes.TEXT,
         validate: {
           notNull: true,
         },
         set(value) {
-          this.setDataValue("password", bcrypt.hashSync(value, saltRounds));
+          this.setDataValue('password', bcrypt.hashSync(value, saltRounds));
         },
       },
     },
     {
       sequelize,
-      modelName: "User",
-    }
+      modelName: 'User',
+    },
   );
   return User;
 };

@@ -8,7 +8,7 @@ const verify = util.promisify(jwt.verify);
 async function checkAuthorization(req, res, next) {
   try {
     const authorizationHeader = req.get('Authorization');
-    const [, accessToken] = authorizationHeader.slit(' ');
+    const [, accessToken] = authorizationHeader.split(' ');
 
     const tokenPayload = await verify(accessToken, accessTokenSecret);
 
@@ -16,7 +16,7 @@ async function checkAuthorization(req, res, next) {
 
     next();
   } catch (err) {
-    next(createHttpError(419));
+    next(createHttpError(401));
   }
 }
 

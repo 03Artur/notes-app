@@ -1,8 +1,10 @@
-const authRouter = require("express").Router();
-const AuthController = require("../controllers/auth-controller");
+const authRouter = require('express').Router();
+const validateBody = require('../middlewares/validateBody');
+const AuthController = require('../controllers/auth-controller');
+const { loginSchema, signUpSchema } = require('../validation');
 
-authRouter.post("/login", AuthController.loginUser);
-authRouter.post("/signup", AuthController.signUpUser);
-authRouter.post("/refresh", AuthController.refreshAuth);
+authRouter.post('/login', validateBody(loginSchema), AuthController.loginUser);
+authRouter.post('/signup', validateBody(signUpSchema), AuthController.signUpUser);
+authRouter.post('/refresh', AuthController.refreshAuth);
 
 module.exports = authRouter;

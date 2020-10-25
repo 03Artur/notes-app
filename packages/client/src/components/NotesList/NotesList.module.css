@@ -1,0 +1,13 @@
+.notesList{
+    background-color: white;    
+}
+
+.notesList__item {
+    background-color: transparent;
+}
+
+.notesList__item_current{
+    background-color: #ffa940;
+}
+
+

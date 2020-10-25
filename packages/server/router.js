@@ -7,6 +7,6 @@ router.use('/auth', authRouter);
 
 router.use(checkAuthorization);
 
-router.use('/users/:userId/notes', notesRouter);
+router.use('/notes', notesRouter);
 
 module.exports = router;
