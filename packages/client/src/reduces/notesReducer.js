@@ -1,5 +1,6 @@
+/* eslint-disable no-param-reassign */
 import produce from 'immer';
-import ACTION_TYPE from './../actions/type';
+import ACTION_TYPE from '../actions/type';
 import createReducer from './helpers/createReducer';
 
 const initialState = {

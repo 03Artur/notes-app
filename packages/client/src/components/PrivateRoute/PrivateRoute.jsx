@@ -1,10 +1,12 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { userSelector } from '../../selectors';
 
 function PrivateRoute({ redirectTo, ...rest }) {
-  const { user } = useSelector((state) => state.auth);
+  const user = useSelector(userSelector);
 
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading

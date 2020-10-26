@@ -5,6 +5,7 @@ import './App.css';
 import { REFRESH_TOKEN_KEY } from './constants';
 import { useDispatch } from 'react-redux';
 import { refreshAuth } from './actions/authActionCreators';
+
 const HomePage = lazy(() => import('./pages/HomePage'));
 const AuthPage = lazy(() => import('./pages/AuthPage'));
 

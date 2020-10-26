@@ -1,21 +1,19 @@
-import { Avatar, List, Button } from 'antd';
-import styles from './NotesList.module.css';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
 import React, { useCallback } from 'react';
+import { Avatar, List, Button } from 'antd';
+import { useSelector, useDispatch } from 'react-redux';
+import classNames from 'classnames';
 import {
   selectNote,
   deleteNoteRequest,
 } from '../../actions/notesActionCreators';
-import classNames from 'classnames';
+import { notesSelector } from '../../selectors';
+import styles from './NotesList.module.css';
 
 const NotesList = () => {
-  const { currentIndex, notes, isFetching } = useSelector(
-    (state) => state.notes,
-  );
+  const { currentIndex, notes, isFetching } = useSelector(notesSelector);
   const dispatch = useDispatch();
 
-  const handleNoteItemClick = useCallback(
+  const handleItemClick = useCallback(
     ({ currentTarget }) => {
       const {
         dataset: { index },
@@ -40,7 +38,9 @@ const NotesList = () => {
   );
 
   const renderItem = useCallback(
-    ({ id, title, text, image }, index) => {
+    ({
+      id, title, text, image,
+    }, index) => {
       const className = classNames([styles.notesList__item], {
         [styles.notesList__item_current]: index === currentIndex,
       });
@@ -50,7 +50,7 @@ const NotesList = () => {
           key={id}
           title={title}
           data-index={index}
-          onClick={handleNoteItemClick}
+          onClick={handleItemClick}
         >
           <List.Item.Meta
             avatar={<Avatar shape="square" src={image} />}

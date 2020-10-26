@@ -1,13 +1,11 @@
 import ACTION_TYPE from './type';
 
-export const loginRequest = (data) => {
-  return {
-    type: ACTION_TYPE.LOGIN_REQUEST,
-    payload: {
-      data,
-    },
-  };
-};
+export const loginRequest = (data) => ({
+  type: ACTION_TYPE.LOGIN_REQUEST,
+  payload: {
+    data,
+  },
+});
 
 export const signUpRequest = (data) => ({
   type: ACTION_TYPE.SIGN_UP_REQUEST,

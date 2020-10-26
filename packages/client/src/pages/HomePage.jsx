@@ -1,18 +1,18 @@
-import { Layout, Empty, Button } from 'antd';
 import { bindActionCreators } from 'redux';
-import React, { useCallback, useMemo, useEffect } from 'react';
+import { Layout, Empty, Button } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import NotesList from '../components/NotesList/NotesList';
-import * as NotesActionCreators from './../actions/notesActionCreators';
+import React, { useMemo, useEffect, useCallback } from 'react';
 import Note from '../components/Note/Note';
 import { currentNoteSelector } from '../selectors';
+import NotesList from '../components/NotesList/NotesList';
+import * as NotesActionCreators from '../actions/notesActionCreators';
 
 const { Header, Sider, Content } = Layout;
 
 function HomePage() {
-  const note = useSelector(currentNoteSelector);
-
   const dispatch = useDispatch();
+  const currentNote = useSelector(currentNoteSelector);
+
   const { createNoteRequest, getNotesRequest } = useMemo(
     () => bindActionCreators(NotesActionCreators, dispatch),
     [dispatch],
@@ -22,6 +22,13 @@ function HomePage() {
     getNotesRequest();
   }, []);
 
+  const createNote = useCallback(() => {
+    createNoteRequest({
+      title: 'note title',
+      text: 'note description',
+    });
+  }, [createNoteRequest]);
+
   return (
     <Layout>
       <Header />
@@ -30,18 +37,22 @@ function HomePage() {
           <Button
             type="primary"
             block
-            onClick={() => {
-              createNoteRequest({
-                title: 'note title',
-                text: 'note description',
-              });
-            }}
+            onClick={createNote}
           >
             Add note
           </Button>
           <NotesList />
         </Sider>
-        <Content>{note ? <Note {...note} /> : <Empty />}</Content>
+        <Content>
+          {currentNote ? (
+            <Note
+              id={currentNote.id}
+              text={currentNote.text}
+              title={currentNote.title}
+              createdAt={currentNote.createdAt}
+            />
+          ) : <Empty />}
+        </Content>
       </Layout>
     </Layout>
   );

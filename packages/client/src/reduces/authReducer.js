@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import produce from 'immer';
 import createReducer from './helpers/createReducer';
 import ACTION_TYPE from '../actions/type';
@@ -9,10 +10,10 @@ const initialState = {
 };
 
 const handlers = {
-  [ACTION_TYPE.LOGIN_REQUEST]: produce((draftState, action) => {
+  [ACTION_TYPE.LOGIN_REQUEST]: produce((draftState) => {
     draftState.isFetching = true;
   }),
-  [ACTION_TYPE.SIGN_UP_REQUEST]: produce((draftState, action) => {
+  [ACTION_TYPE.SIGN_UP_REQUEST]: produce((draftState) => {
     draftState.isFetching = true;
   }),
   [ACTION_TYPE.AUTH_REQUEST_SUCCESS]: produce((draftState, action) => {

@@ -6,10 +6,7 @@ class AuthApi {
     this.client = client;
     this.client.interceptors.request.use(this.interceptRequest);
     this.url = '/auth';
-    this.client.interceptors.response.use(
-      this.interceptResponse,
-      this.interceptResponseError,
-    );
+    this.client.interceptors.response.use(this.interceptResponse, this.interceptResponseError);
   }
 
   login = (data) => {
@@ -70,10 +67,7 @@ class AuthApi {
       this.logout();
     }
 
-    if (
-      err.response.status === 401 &&
-      localStorage.getItem(REFRESH_TOKEN_KEY)
-    ) {
+    if (err.response.status === 401 && localStorage.getItem(REFRESH_TOKEN_KEY)) {
       await this.refresh({
         refreshToken: localStorage.getItem(REFRESH_TOKEN_KEY),
       });

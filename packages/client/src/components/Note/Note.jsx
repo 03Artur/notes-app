@@ -1,23 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import { Space, Typography, Divider } from 'antd';
-import { useDispatch } from 'react-redux';
-import { updateNoteRequest } from '../../actions/notesActionCreators';
+/* eslint-disable import/no-extraneous-dependencies */
+import PropTypes from 'prop-types';
 import format from 'date-fns/format';
+import { useDispatch } from 'react-redux';
+import { Space, Typography, Divider } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { updateNoteRequest } from '../../actions/notesActionCreators';
+
 const { Title, Paragraph, Text } = Typography;
 
-const Note = (props) => {
-  const { id, title, text, createdAt } = props;
+const Note = ({
+  id, title, text, createdAt,
+}) => {
   const dispatch = useDispatch();
 
-  const [editableTitle, setEditableTitle] = useState('');
-  const [editableText, setEditableText] = useState('');
   const [isEdit, setIsEdit] = useState(false);
+  const [editableText, setEditableText] = useState('');
+  const [editableTitle, setEditableTitle] = useState('');
 
   useEffect(() => {
     setEditableText(text);
     setEditableTitle(title);
   }, [id]);
 
+  // eslint-disable-next-line consistent-return
   useEffect(() => {
     if (isEdit) {
       const timeoutId = setTimeout(() => {
@@ -28,7 +33,7 @@ const Note = (props) => {
           }),
         );
         setIsEdit((currentValue) => !currentValue);
-      }, 1000);
+      }, 200);
 
       return () => {
         clearTimeout(timeoutId);
@@ -68,6 +73,13 @@ const Note = (props) => {
       </Paragraph>
     </Space>
   );
+};
+
+Note.propTypes = {
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  title: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+  createdAt: PropTypes.string.isRequired,
 };
 
 export default Note;
